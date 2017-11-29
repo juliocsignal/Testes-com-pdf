@@ -40,26 +40,30 @@ public class MainActivity extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.botao);
 
-        final EditText txt = (EditText) findViewById(R.id.txt1);
-        //EditText txt2 = (EditText) findViewById(R.id.txt2);
-        //EditText txt3 = (EditText) findViewById(R.id.txt3);
+        final EditText txt1 = (EditText) findViewById(R.id.txt1);
+        final EditText txt2 = (EditText) findViewById(R.id.txt2);
+        final EditText txt3 = (EditText) findViewById(R.id.txt3);
+        final EditText txt4 = (EditText) findViewById(R.id.txt4);
+        final EditText txt5 = (EditText) findViewById(R.id.txt5);
+        final EditText txt6 = (EditText) findViewById(R.id.txt6);
+        final EditText txt7 = (EditText) findViewById(R.id.txt7);
+        final EditText txt8 = (EditText) findViewById(R.id.txt8);
 
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cria(txt);
-
+                Cria(txt1,txt2,txt3,txt4,txt5,txt6,txt7,txt8);
             }
         });
 
 
     }
 
-    public void Cria(EditText text)
+    public void Cria(EditText numero, EditText paciente, EditText tutor, EditText tel, EditText proced, EditText afeccao, EditText vet, EditText anestesista)
     {
         Document documento = new Document(PageSize.LETTER);
-        String arquivoNome = "Meu arquivo COxa.pdf";
+        String arquivoNome = "Meu arquivo.pdf";
         String tarjetaSD = Environment.getExternalStorageDirectory().toString();
         File arq = new File(tarjetaSD + File.separator + pasta);
 
@@ -95,8 +99,13 @@ public class MainActivity extends AppCompatActivity {
             documento.addTitle("Titulo lalala");
 
             XMLWorkerHelper worker = XMLWorkerHelper.getInstance();
-            String htmlToPDF = "<html><head></head><body><h1>"+text.getText()+"</h1><p>OI eu " +
-                    "sou o paragrafo</p></body>/html>";
+            String htmlToPDF = "<html> <head> <style> td { padding: 8px; padding-right: 15px; } tr { margin: 0 auto; } </style> </head> <body><table border="+1+"> <tr> <td>Número:"+numero.getText()+"</td> <td>Paciente: "+paciente.getText()+"</td> </tr> <tr> <td>Tutor: "+tutor.getText()+"</td> <td>Telefone: "+tel.getText()+"</td> </tr> <tr> <td>Procedimento: "+proced.getText()+"</td> <td>Afecção: "+afeccao.getText()+"</td> </tr> <tr> <td>Vet. Responsável: "+vet.getText()+"</td> <td>Anestesista: "+anestesista.getText()+"</td> </tr> </table></body>\n" +
+                    "</html>";
+
+            /*"<html><head></head><body><h1>"+text.getText()+"</h1><p>OI eu " +
+                    "sou o paragrafo</p><table border="+"1"+"><tr><td>linha 1, célula 1</td>" +
+                    "<td>linha 1, célulal 2</td></tr></table></body>/html>"*/
+
             try {
                 worker.parseXHtml(pdfWriter,documento, new StringReader(htmlToPDF));
                 documento.close();
